@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "ScanStack (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "ScanStack (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}

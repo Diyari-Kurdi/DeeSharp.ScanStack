@@ -1,0 +1,118 @@
+﻿<Page
+    x:Class="ScanStack.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="using:ScanStack.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:xaml="using:Microsoft.UI.Xaml"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+    </Page.Resources>
+    <ScrollViewer Margin="0,20,0,0">
+        <StackPanel x:Name="ContentArea">
+            <TextBlock x:Uid="Settings_Personalization" Style="{ThemeResource SubtitleTextBlockStyle}" />
+            <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
+                <TextBlock x:Uid="Settings_Theme" />
+                <StackPanel Margin="{StaticResource XSmallTopMargin}">
+                    <RadioButton
+                        x:Uid="Settings_Theme_Light"
+                        Command="{x:Bind ViewModel.SwitchThemeCommand}"
+                        FontSize="15"
+                        GroupName="AppTheme"
+                        IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}">
+                        <RadioButton.CommandParameter>
+                            <xaml:ElementTheme>Light</xaml:ElementTheme>
+                        </RadioButton.CommandParameter>
+                    </RadioButton>
+                    <RadioButton
+                        x:Uid="Settings_Theme_Dark"
+                        Command="{x:Bind ViewModel.SwitchThemeCommand}"
+                        FontSize="15"
+                        GroupName="AppTheme"
+                        IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}">
+                        <RadioButton.CommandParameter>
+                            <xaml:ElementTheme>Dark</xaml:ElementTheme>
+                        </RadioButton.CommandParameter>
+                    </RadioButton>
+                    <RadioButton
+                        x:Uid="Settings_Theme_Default"
+                        Command="{x:Bind ViewModel.SwitchThemeCommand}"
+                        FontSize="15"
+                        GroupName="AppTheme"
+                        IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default, Mode=OneWay}">
+                        <RadioButton.CommandParameter>
+                            <xaml:ElementTheme>Default</xaml:ElementTheme>
+                        </RadioButton.CommandParameter>
+                    </RadioButton>
+                </StackPanel>
+            </StackPanel>
+            <TextBlock
+                Margin="0,0,0,10"
+                Style="{ThemeResource SubtitleTextBlockStyle}"
+                Text="Data Collection" />
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock VerticalAlignment="Center" Text="We collect information on app launches to help us understand how often the app is used. No personal information is collected. Do you agree to this data collection?" />
+                <ToggleSwitch
+                    IsOn="{x:Bind ViewModel.AllowDataCollecting, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    OffContent="No"
+                    OnContent="Yes" />
+            </StackPanel>
+            <TextBlock
+                x:Uid="Settings_About"
+                Margin="0,0,0,10"
+                Style="{ThemeResource SubtitleTextBlockStyle}" />
+            <controls:SettingsExpander
+                Margin="0,0,60,0"
+                Description="By Diyari Ismael"
+                Header="ScanStack"
+                HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/scanner.ico}">
+                <TextBlock
+                    win:IsTextSelectionEnabled="True"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind ViewModel.Version, Mode=OneWay}" />
+                <controls:SettingsExpander.Items>
+                    <controls:SettingsCard Margin="-12,0,0,0" ContentAlignment="Left">
+                        <TextBlock xml:space="preserve" TextWrapping="Wrap">This software is distributed under the MIT License. You are free to use, modify, and distribute the software in accordance with the <Hyperlink NavigateUri="https://github.com/Diyari-Kurdi/DeeSharp.ScanStack/tree/master?tab=MIT-1-ov-file#readme">MIT</Hyperlink>.</TextBlock>
+                    </controls:SettingsCard>
+                    <controls:SettingsCard ContentAlignment="Left">
+                        <GridView
+                            Margin="-12,0,0,0"
+                            Header="Open source libraries"
+                            SelectionMode="None">
+                            <GridView.Items>
+                                <HyperlinkButton Content="Windows Community Toolkit Labs" NavigateUri="https://github.com/CommunityToolkit/Labs-Windows" />
+                                <HyperlinkButton Content="Windows Community Toolkit" NavigateUri="https://github.com/CommunityToolkit/Windows" />
+                                <HyperlinkButton Content=".NET Community Toolkit" NavigateUri="https://github.com/CommunityToolkit/dotnet" />
+                                <HyperlinkButton Content="WinUI" NavigateUri="https://github.com/microsoft/microsoft-ui-xaml" />
+                                <HyperlinkButton Content="Win2D" NavigateUri="https://github.com/microsoft/Win2D" />
+                                <HyperlinkButton Content="WinUIEx" NavigateUri="https://github.com/dotMorten/WinUIEx" />
+                                <HyperlinkButton Content="XAML Behaviors" NavigateUri="https://github.com/microsoft/XamlBehaviors" />
+                                <HyperlinkButton Content="PDFsharp" NavigateUri="https://github.com/empira/pdfsharp" />
+                            </GridView.Items>
+                        </GridView>
+                    </controls:SettingsCard>
+                    <controls:SettingsCard Header="To clone this repository">
+                        <TextBlock
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            IsTextSelectionEnabled="True"
+                            Text="git clone https://github.com/Diyari-Kurdi/DeeSharp.ScanStack.git" />
+                    </controls:SettingsCard>
+                    <controls:SettingsCard
+                        x:Name="BugRequestCard"
+                        Click="BugRequestCard_Click"
+                        Header="File a bug or request new sample"
+                        IsClickEnabled="True">
+                        <controls:SettingsCard.ActionIcon>
+                            <FontIcon Glyph="&#xE8A7;" />
+                        </controls:SettingsCard.ActionIcon>
+                    </controls:SettingsCard>
+                </controls:SettingsExpander.Items>
+            </controls:SettingsExpander>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
