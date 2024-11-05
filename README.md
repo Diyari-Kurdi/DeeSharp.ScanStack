@@ -8,5 +8,8 @@ ScanStack is a versatile document scanning and PDF management application built 
 - **Image Cropping:** Crop and adjust your scanned images for a cleaner, more professional result.
 - **Direct Printing:** Print your documents directly from the app.
 
+## Screenshot
+![image](https://github.com/user-attachments/assets/ce5e46e4-e68c-4641-8cbb-5b586b307c41)
+
 ## License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/Diyari-Kurdi/DeeSharp.ScanStack/tree/master?tab=MIT-1-ov-file#readme) file for details.
