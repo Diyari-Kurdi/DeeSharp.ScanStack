@@ -15,4 +15,4 @@ ScanStack is a versatile document scanning and PDF management application built 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/Diyari-Kurdi/DeeSharp.ScanStack/tree/master?tab=MIT-1-ov-file#readme) file for details.
 
 ## Privacy Policy
-You can read our privacy policy at the following link: [Privacy Policy](https://github.com/Diyari-Kurdi/DeeSharp.ScanStack/blob/master/privacy-policy.md).
+You can read our privacy policy at the following link: [Privacy Policy](https://diyari-kurdi.github.io/DeeSharp.ScanStack/privacy-policy).
