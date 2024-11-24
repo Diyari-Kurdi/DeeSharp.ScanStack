@@ -30,4 +30,4 @@ We may update this privacy policy from time to time. If there are any significan
 
 ## Contact Us
 
-If you have any questions or concerns, feel free to contact us at: [diyari.ismael@outlook.com]
+If you have any questions or concerns, feel free to contact us at: diyari.ismael@outlook.com
