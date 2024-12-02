@@ -11,6 +11,10 @@ ScanStack is a versatile document scanning and PDF management application built 
 ## Screenshot
 ![Screenshot 2024-11-24 152722](https://github.com/user-attachments/assets/77740bb5-1dc0-444d-ba38-4d92c63c7b1d)
 
+## Download ScanStack
+
+[![Download on the Microsoft Store](https://img.shields.io/badge/Download-Microsoft%20Store-blue?logo=microsoft&style=for-the-badge)](https://apps.microsoft.com/detail/9p4c9rcwd4td?cid=DevShareMCLPCB&hl=en-us)
+
 ## License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/Diyari-Kurdi/DeeSharp.ScanStack/tree/master?tab=MIT-1-ov-file#readme) file for details.
 
