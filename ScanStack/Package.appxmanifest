@@ -14,7 +14,7 @@
   <Identity
     Name="DiyariIsmael.ScanStack"
     Publisher="CN=A0B3615F-8266-41B2-BE84-EBCBF0FBD748"
-    Version="1.0.0.0" />
+    Version="1.0.1.0" />
     
   <mp:PhoneIdentity PhoneProductId="590353ed-47e2-4100-8b47-3ffb23ef8e97" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
     
