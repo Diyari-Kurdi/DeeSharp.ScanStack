@@ -17,7 +17,7 @@
     <EnableMsixTooling>true</EnableMsixTooling>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
-    <PackageCertificateThumbprint>8537C5ECC703E0BA2B9F3BB80155D45032D0D120</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>B86A1D5CBE0947B4A99E822840897CA34B80462D</PackageCertificateThumbprint>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
