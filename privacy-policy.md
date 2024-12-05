@@ -2,31 +2,24 @@
 
 **Effective Date:** 2024
 
-At ScanStack, we value your privacy. This privacy policy explains the data we collect and how we use it.
+At ScanStack, your privacy is our priority. This privacy policy outlines our practices to ensure transparency and your peace of mind.
 
 ## Information We Collect
 
-ScanStack collects minimal data for the purpose of application performance and diagnostics. Specifically, we collect the following data when the app is launched:
-
-- **App Launch Event:** When the app is launched, we log an event for telemetry purposes. This event helps us understand the usage of the app but does not collect any personally identifiable information (PII).
-
-This data is sent to our telemetry service and is used solely for monitoring and improving app performance.
-
-## How We Use Your Data
-
-The data collected (app launch event) is used exclusively for monitoring the performance and usage of ScanStack. We do not collect, store, or share any personal information, and the data is not tied to individual users.
+ScanStack does not collect, store, or share any user data.  
+We have removed all telemetry and tracking functionalities to guarantee your privacy.
 
 ## Third-Party Services
 
-ScanStack does not use third-party services that require access to your personal information.
+ScanStack does not rely on or integrate with any third-party services that collect or process user data.
 
 ## Data Security
 
-We do not store any user data, and all data sent during telemetry collection is anonymized.
+Since no user data is collected, there is no data storage, transmission, or security concern associated with ScanStack.
 
 ## Updates to Privacy Policy
 
-We may update this privacy policy from time to time. If there are any significant changes, we will post them here.
+We may update this privacy policy as necessary to reflect changes in the application. Any updates will be published on this page.
 
 ## Contact Us
 
