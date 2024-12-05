@@ -10,17 +10,10 @@ namespace ScanStack.ViewModels;
 public partial class SettingsViewModel : ObservableRecipient
 {
     private readonly IThemeSelectorService _themeSelectorService;
-    private readonly ILocalSettingsService _localSettingsService;
 
     [ObservableProperty]
     private ElementTheme _elementTheme;
 
-    [ObservableProperty]
-    private bool _allowDataCollecting = true;
-    partial void OnAllowDataCollectingChanged(bool value)
-    {
-        _localSettingsService.SaveSettingAsync("AllowDataCollecting", value);
-    }
     public string Version { get; } = AppInfo.GetVersion();
 
     public ICommand SwitchThemeCommand
@@ -28,7 +21,7 @@ public partial class SettingsViewModel : ObservableRecipient
         get;
     }
 
-    public SettingsViewModel(IThemeSelectorService themeSelectorService, ILocalSettingsService localSettingsService)
+    public SettingsViewModel(IThemeSelectorService themeSelectorService)
     {
         _themeSelectorService = themeSelectorService;
         _elementTheme = _themeSelectorService.Theme;
@@ -42,12 +35,5 @@ public partial class SettingsViewModel : ObservableRecipient
                     await _themeSelectorService.SetThemeAsync(param);
                 }
             });
-        _localSettingsService = localSettingsService;
-        _ = LoadDCFromSettingsAsync();
-    }
-
-    private async Task LoadDCFromSettingsAsync()
-    {
-        AllowDataCollecting = await _localSettingsService.ReadSettingAsync<bool>("AllowDataCollecting");
     }
 }

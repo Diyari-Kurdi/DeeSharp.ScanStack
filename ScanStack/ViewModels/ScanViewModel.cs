@@ -296,10 +296,4 @@ public partial class ScanViewModel : ObservableObject
     {
         args.SetSource(printDocumentSource);
     }
-
-    private void PrintTask_Completed(PrintTask sender, PrintTaskCompletedEventArgs args)
-    {
-
-    }
-
 }

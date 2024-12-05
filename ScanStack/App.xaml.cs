@@ -36,10 +36,6 @@ public partial class App : Application
     }
 
     public static WindowEx MainWindow { get; } = new MainWindow();
-    private TelemetryLogger TelemetryLogger
-    {
-        get;
-    }
     public static UIElement? AppTitlebar
     {
         get; set;
@@ -47,8 +43,7 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
-        bool isNewInstance;
-        _mutex = new Mutex(true, "ScanStack", out isNewInstance);
+        _mutex = new Mutex(true, "ScanStack", out bool isNewInstance);
 
         if (!isNewInstance)
         {
@@ -90,34 +85,23 @@ public partial class App : Application
             services.AddTransient<ShellPage>();
             services.AddTransient<ShellViewModel>();
 
-            services.AddScoped<TelemetryLogger>();
-
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
         }).
         Build();
 
-        TelemetryLogger = GetService<TelemetryLogger>();
-        TelemetryLogger.TelemetryClient.TrackEvent("AppLaunched");
-        MainWindow.Closed += async (s, e) =>
-        {
-            _mutex?.ReleaseMutex();
-            await TelemetryLogger.Flush();
-        };
         App.GetService<IAppNotificationService>().Initialize();
 
         UnhandledException += App_UnhandledException;
     }
     private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
     {
-        TelemetryLogger.TelemetryClient.TrackException(e.Exception);
+        
     }
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
         base.OnLaunched(args);
-
-        //App.GetService<IAppNotificationService>().Show(string.Format("AppNotificationSamplePayload".GetLocalized(), AppContext.BaseDirectory));
         var pictures = await StorageLibrary.GetLibraryAsync(KnownLibraryId.Pictures);
         var path = Path.Combine(pictures.SaveFolder.Path, "ScanStack");
         if (!Path.Exists(path))

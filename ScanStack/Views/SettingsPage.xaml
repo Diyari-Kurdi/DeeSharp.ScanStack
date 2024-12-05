@@ -52,17 +52,6 @@
                 </StackPanel>
             </StackPanel>
             <TextBlock
-                Margin="0,0,0,10"
-                Style="{ThemeResource SubtitleTextBlockStyle}"
-                Text="Data Collection" />
-            <StackPanel Orientation="Horizontal" Spacing="10">
-                <TextBlock VerticalAlignment="Center" Text="We collect information on app launches to help us understand how often the app is used. No personal information is collected. Do you agree to this data collection?" />
-                <ToggleSwitch
-                    IsOn="{x:Bind ViewModel.AllowDataCollecting, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                    OffContent="No"
-                    OnContent="Yes" />
-            </StackPanel>
-            <TextBlock
                 x:Uid="Settings_About"
                 Margin="0,0,0,10"
                 Style="{ThemeResource SubtitleTextBlockStyle}" />

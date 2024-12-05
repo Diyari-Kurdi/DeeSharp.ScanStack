@@ -1,10 +1,7 @@
-﻿using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
-using Microsoft.Windows.AppNotifications;
 
 using ScanStack.Contracts.Services;
-using ScanStack.ViewModels;
 
 namespace ScanStack.Activation;
 
@@ -41,10 +38,10 @@ public class AppNotificationActivationHandler : ActivationHandler<LaunchActivate
         ////     });
         //// }
 
-        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-        {
-            App.MainWindow.ShowMessageDialogAsync("TODO: Handle notification activations.", "Notification Activation");
-        });
+        //App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+        //{
+        //    App.MainWindow.ShowMessageDialogAsync("TODO: Handle notification activations.", "Notification Activation");
+        //});
 
         await Task.CompletedTask;
     }
