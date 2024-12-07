@@ -104,12 +104,16 @@ public partial class ScanViewModel : ObservableObject
         {
             await ScannerManager.InitializeScannerAsync(ScannerManager.SelectedDevice);
         }
-
-        ScannerManager.Scanner.FeederConfiguration.ColorMode = ScanSettings.ImageScannerColorMode;
-        ScannerManager.Scanner.FlatbedConfiguration.ColorMode = ScanSettings.ImageScannerColorMode;
         var dpi = ScanSettings.SelectedDpi;
-        ScannerManager.Scanner.FlatbedConfiguration.DesiredResolution = new ImageScannerResolution(dpi, dpi);
-
+        if (ScannerManager.Scanner.IsScanSourceSupported(ImageScannerScanSource.Feeder))
+        {
+            ScannerManager.Scanner.FeederConfiguration.ColorMode = ScanSettings.ImageScannerColorMode;
+        }
+        else
+        {
+            ScannerManager.Scanner.FlatbedConfiguration.ColorMode = ScanSettings.ImageScannerColorMode;
+            ScannerManager.Scanner.FlatbedConfiguration.DesiredResolution = new ImageScannerResolution(dpi, dpi);
+        }
         var picturesFolder = await StorageLibrary.GetLibraryAsync(KnownLibraryId.Pictures);
         var scanStackPath = Path.Combine(picturesFolder.SaveFolder.Path, "ScanStack");
         if (!Path.Exists(scanStackPath))
