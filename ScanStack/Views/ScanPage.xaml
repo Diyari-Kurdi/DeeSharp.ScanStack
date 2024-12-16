@@ -306,6 +306,25 @@
                         </Button>
                         <AppBarSeparator />
                         <Button
+                            x:Name="MirrorHButton"
+                            Command="{x:Bind ViewModel.ScanFileManager.ImageEditor.MirrorImageCommand}"
+                            CommandParameter="True"
+                            ToolTipService.ToolTip="Mirror Horizontally">
+                            <Button.Content>
+                                <FontIcon Glyph="&#xF587;" />
+                            </Button.Content>
+                        </Button>
+                        <Button
+                            x:Name="MirrorVButton"
+                            Command="{x:Bind ViewModel.ScanFileManager.ImageEditor.MirrorImageCommand}"
+                            CommandParameter="False"
+                            ToolTipService.ToolTip="Mirror Vertically">
+                            <Button.Content>
+                                <FontIcon Glyph="&#xF589;" />
+                            </Button.Content>
+                        </Button>
+                        <AppBarSeparator />
+                        <Button
                             x:Name="RemoveFileButton"
                             Command="{x:Bind ViewModel.ScanFileManager.RemoveSelectedFilesCommand}"
                             ToolTipService.ToolTip="Remove Selected Files">

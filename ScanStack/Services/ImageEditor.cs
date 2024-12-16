@@ -1,12 +1,12 @@
-﻿using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Graphics.Canvas;
 using Microsoft.UI;
 using Microsoft.UI.Xaml.Media.Imaging;
 using ScanStack.Core.Models;
 using ScanStack.Helpers;
+using System.Numerics;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
@@ -20,6 +20,7 @@ public partial class ImageEditor : ObservableObject
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(RotateImageCommand))]
+    [NotifyCanExecuteChangedFor(nameof(MirrorImageCommand))]
     private FileModel? _selectedFile;
 
     private bool CanExecute => SelectedFile != null;
@@ -60,6 +61,89 @@ public partial class ImageEditor : ObservableObject
         using var outputStream = await outputFile.OpenAsync(FileAccessMode.ReadWrite);
         await RotateImageAsync(inputStream, outputStream, angle, fileFormat);
         FileChanged?.Invoke(selectedFile, outputFile.Path);
+    }
+
+    [RelayCommand(CanExecute = nameof(CanExecute))]
+    private async Task MirrorImage(object mirrorHorizontally)
+    {
+        bool MirrorHorizontally = bool.Parse(mirrorHorizontally.ToString()!);
+        var selectedFile = SelectedFile!;
+        var pictures = await StorageLibrary.GetLibraryAsync(KnownLibraryId.Pictures);
+        var savePath = Path.Combine(pictures.SaveFolder.Path, "ScanStack");
+        if (!Path.Exists(savePath))
+        {
+            Directory.CreateDirectory(savePath);
+        }
+
+        var saveFolder = await StorageFolder.GetFolderFromPathAsync(savePath);
+        var inputFile = await StorageFile.GetFileFromPathAsync(selectedFile.Path);
+        var fileFormat = BitmapFileFormat.Png;
+        switch (Path.GetExtension(selectedFile.Path))
+        {
+            case ".jpg" or ".jpeg":
+                fileFormat = BitmapFileFormat.Jpeg;
+                break;
+            case ".png":
+                fileFormat = BitmapFileFormat.Png;
+                break;
+            case ".tiff":
+                fileFormat = BitmapFileFormat.Tiff;
+                break;
+            case ".bmp":
+                fileFormat = BitmapFileFormat.Bmp;
+                break;
+            default:
+                break;
+        }
+        var outputFile = await saveFolder.CreateFileAsync($"CopyOf_{Path.GetFileName(selectedFile.Path)}", CreationCollisionOption.ReplaceExisting);
+        using var inputStream = await inputFile.OpenAsync(FileAccessMode.Read);
+        using var outputStream = await outputFile.OpenAsync(FileAccessMode.ReadWrite);
+        await MirrorImageAsync(inputStream, outputStream, fileFormat, MirrorHorizontally);
+        FileChanged?.Invoke(selectedFile, outputFile.Path);
+    }
+    public static async Task MirrorImageAsync(IRandomAccessStream inputStream, IRandomAccessStream outputStream, BitmapFileFormat bitmapFileFormat, bool mirrorHorizontally = true)
+    {
+        var device = CanvasDevice.GetSharedDevice();
+
+        using var sourceBitmap = await CanvasBitmap.LoadAsync(device, inputStream);
+        var sourceWidth = (float)sourceBitmap.Size.Width;
+        var sourceHeight = (float)sourceBitmap.Size.Height;
+
+        var center = new Vector2(sourceWidth / 2, sourceHeight / 2);
+
+        using var renderTarget = new CanvasRenderTarget(device, sourceWidth, sourceHeight, sourceBitmap.Dpi);
+        using (var session = renderTarget.CreateDrawingSession())
+        {
+            session.Clear(Colors.Transparent);
+
+            // Apply mirroring transformations
+            var transform = Matrix3x2.Identity;
+
+            if (mirrorHorizontally)
+            {
+                transform *= Matrix3x2.CreateScale(-1, 1, center);
+            }
+            else
+            {
+                transform *= Matrix3x2.CreateScale(1, -1, center);
+            }
+
+            session.Transform = transform;
+            session.DrawImage(sourceBitmap, new Rect(0, 0, sourceWidth, sourceHeight));
+        }
+
+        var pixelBytes = renderTarget.GetPixelBytes();
+        var bitmapEncoder = await BitmapEncoder.CreateAsync(GetEncoderId(bitmapFileFormat), outputStream);
+        bitmapEncoder.SetPixelData(
+            BitmapPixelFormat.Bgra8,
+            BitmapAlphaMode.Premultiplied,
+            (uint)sourceWidth,
+            (uint)sourceHeight,
+            sourceBitmap.Dpi,
+            sourceBitmap.Dpi,
+            pixelBytes
+        );
+        await bitmapEncoder.FlushAsync();
     }
 
     public static async Task RotateImageAsync(IRandomAccessStream inputStream, IRandomAccessStream outputStream, float rotationAngle, BitmapFileFormat bitmapFileFormat)
